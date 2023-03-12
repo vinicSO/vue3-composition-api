@@ -1,13 +1,14 @@
 <template>
-    <h1>Lista de Tarefas</h1>
+    <h1>
+        Lista de Tarefas
+        <RouterLink :to="{ name: 'todos.create' }">+</RouterLink>
+    </h1>
 
     <div v-if="loading">Carregando as tarefas</div>
 
     <ul>
         <li v-for="todo in todos" :key="todo.identify">{{ todo.title }}</li>
     </ul>
-
-    <input type="text" v-model="name">
 </template>
 
 <script>
