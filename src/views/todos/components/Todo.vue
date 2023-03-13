@@ -3,10 +3,13 @@
         {{ todo.title }} - {{ todo.body }}
 
         <RouterLink :to="{ name: 'todos.edit', params: { id: todo.identify } }">Editar</RouterLink>
+        <a href="#" @click.prevent="deleteTodo">Deletar</a>
     </div>
 </template>
 
 <script>
+import TodoService from '../../../services/todo.service'
+
 
     export default {
         name: 'Todo',
@@ -14,6 +17,17 @@
             todo: {
                 require: true,
                 type: Object
+            }
+        },
+        setup (props, { emit }) {
+
+            const deleteTodo = () => {
+                TodoService.deleteTodo(props.todo.identify)
+                    .then(() => emit('deleteTodo', props.todo))
+            }
+
+            return {
+                deleteTodo
             }
         }
     }

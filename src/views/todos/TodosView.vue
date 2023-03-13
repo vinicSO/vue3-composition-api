@@ -7,7 +7,7 @@
     <div v-if="loading">Carregando as tarefas</div>
 
     <ul>
-        <Todo v-for="todo in todos" :todo="todo"></Todo>
+        <Todo v-for="todo in todos" :todo="todo" @deleteTodo="deleteTodo"></Todo>
     </ul>
 </template>
 
@@ -32,16 +32,20 @@
                     .then(response => todos.value = response.data.data)
                     .catch(error => console.log(error))
                     .finally(() => loading.value = false)
-
             })
+
+            const deleteTodo = (todo) => {
+                todos.value.splice(todos.value.indexOf(todo), 1)
+            }
             
             return {
                 todos,
                 loading,
+                deleteTodo
             }
         },
         components: {
-            Todo
+            Todo,
         }
     }
 </script>
