@@ -7,7 +7,7 @@
     <div v-if="loading">Carregando as tarefas</div>
 
     <ul>
-        <Todo v-for="todo in todos" :todo="todo" @deleteTodo="deleteTodo"></Todo>
+        <Todo v-for="todo in todos" :todo="todo" @deleteTodo="deleteTodo" @updateTodo="updateTodo"></Todo>
     </ul>
 </template>
 
@@ -35,13 +35,28 @@
             })
 
             const deleteTodo = (todo) => {
+
                 todos.value.splice(todos.value.indexOf(todo), 1)
+            }
+
+            const updateTodo = (todo, id) => {
+
+                todos.value = todos.value.map(t => {
+                    if (t.identify == id) {
+                        todo.identify = id
+
+                        return todo
+                    }
+
+                    return t;
+                })
             }
             
             return {
                 todos,
                 loading,
-                deleteTodo
+                deleteTodo,
+                updateTodo
             }
         },
         components: {

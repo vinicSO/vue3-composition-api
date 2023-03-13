@@ -1,5 +1,7 @@
 <template>
     <div>
+        <input type="checkbox" :checked="completed" @change="toggleStatus">
+        
         {{ todo.title }} - {{ todo.body }}
 
         <RouterLink :to="{ name: 'todos.edit', params: { id: todo.identify } }">Editar</RouterLink>
@@ -8,6 +10,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import TodoService from '../../../services/todo.service'
 
 
@@ -21,13 +24,32 @@ import TodoService from '../../../services/todo.service'
         },
         setup (props, { emit }) {
 
+            const completed = computed(() => props.todo.completed == 'S')
+
             const deleteTodo = () => {
                 TodoService.deleteTodo(props.todo.identify)
                     .then(() => emit('deleteTodo', props.todo))
             }
 
+            const toggleStatus = () => {
+                const todo = props.todo
+
+                todo.completed = completed.value ? 'N' : 'S'
+
+                const params = {
+                    name: todo.title,
+                    description: todo.body,
+                    completed: completed.value
+                }
+
+                TodoService.editTodo(params, props.todo.identify)
+                    .then(() => emit('updateTodo', todo, props.todo.identify))
+            }
+
             return {
-                deleteTodo
+                deleteTodo,
+                completed,
+                toggleStatus
             }
         }
     }
