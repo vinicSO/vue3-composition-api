@@ -11,4 +11,14 @@ export default class TodoService {
         
         return axios.post('/todos', params)
     }
+
+    static async editTodo (params, id) {
+        
+        return axios.put(`/todos/${id}`, params)
+    }
+
+    static async getTodo (id) {
+
+        return axios.get(`/todos/${id}`)
+    }
 }

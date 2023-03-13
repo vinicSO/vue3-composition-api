@@ -1,6 +1,8 @@
 <template>
     <div>
         {{ todo.title }} - {{ todo.body }}
+
+        <RouterLink :to="{ name: 'todos.edit', params: { id: todo.identify } }">Editar</RouterLink>
     </div>
 </template>
 
