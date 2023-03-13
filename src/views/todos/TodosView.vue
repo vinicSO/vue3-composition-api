@@ -7,13 +7,14 @@
     <div v-if="loading">Carregando as tarefas</div>
 
     <ul>
-        <li v-for="todo in todos" :key="todo.identify">{{ todo.title }}</li>
+        <Todo v-for="todo in todos" :todo="todo"></Todo>
     </ul>
 </template>
 
 <script>
     import { onMounted, ref } from 'vue';
     import TodoService from '@/services/todo.service'
+    import Todo from './components/Todo.vue';
 
     export default {
         name: 'TodosView',
@@ -38,6 +39,9 @@
                 todos,
                 loading,
             }
+        },
+        components: {
+            Todo
         }
     }
 </script>
