@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <li>
         <input type="checkbox" :checked="completed" @change="toggleStatus">
         
         {{ todo.title }} - {{ todo.body }}
 
         <RouterLink :to="{ name: 'todos.edit', params: { id: todo.identify } }">Editar</RouterLink>
         <a href="#" @click.prevent="deleteTodo">Deletar</a>
-    </div>
+    </li>
 </template>
 
 <script>
